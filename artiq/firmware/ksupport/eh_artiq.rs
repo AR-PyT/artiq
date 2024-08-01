@@ -328,7 +328,8 @@ extern fn stop_fn(_version: c_int,
     }
 }
 
-static EXCEPTION_ID_LOOKUP: [(&str, u32); 12] = [
+// Must be kept in sync with preallocate_runtime_exception_names() in artiq/language/embedding_map.py
+static EXCEPTION_ID_LOOKUP: [(&str, u32); 20] = [
     ("RuntimeError", 0),
     ("RTIOUnderflow", 1),
     ("RTIOOverflow", 2),
@@ -337,10 +338,18 @@ static EXCEPTION_ID_LOOKUP: [(&str, u32); 12] = [
     ("I2CError", 5),
     ("CacheError", 6),
     ("SPIError", 7),
-    ("ZeroDivisionError", 8),
-    ("IndexError", 9),
-    ("UnwrapNoneError", 10),
-    ("SubkernelError", 11)
+    ("SubkernelError", 8),
+    ("ZeroDivisionError", 9),
+    ("IndexError", 10),
+    ("ValueError", 11),
+    ("RuntimeError", 12),
+    ("AssertionError", 13),
+    ("KeyError", 14),
+    ("NotImplementedError", 15),
+    ("OverflowError", 16),
+    ("IOError", 17),
+    ("UnwrapNoneError", 18),
+    ("LinAlgError", 19),
 ];
 
 pub fn get_exception_id(name: &str) -> u32 {

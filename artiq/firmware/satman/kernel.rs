@@ -440,7 +440,7 @@ impl Manager {
         let mut writer = Cursor::new(raw_exception);
         match (HostKernelException {
             exceptions: &[Some(eh_artiq::Exception {
-                id:       11,  // SubkernelError, defined in ksupport
+                id:       8,  // SubkernelError, defined in ksupport
                 message:  format!("in subkernel id {}: {:?}", self.current_id, cause).as_c_slice(),
                 param:    [0, 0, 0],
                 file:     file!().as_c_slice(),

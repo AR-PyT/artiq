@@ -1,6 +1,7 @@
 from artiq.language.core import nac3, UnwrapNoneError
-from builtins import ZeroDivisionError, ValueError, IndexError, RuntimeError, AssertionError
-
+from builtins import ZeroDivisionError, IndexError, ValueError, RuntimeError, \
+    AssertionError, KeyError, NotImplementedError, OverflowError, IOError
+from numpy.linalg import LinAlgError
 
 @nac3
 class RTIOUnderflow(Exception):

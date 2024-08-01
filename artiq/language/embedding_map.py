@@ -18,6 +18,7 @@ class EmbeddingMap:
                                                   "I2CError",
                                                   "CacheError",
                                                   "SPIError",
+                                                  "SubkernelError",
                                                   "0:ZeroDivisionError",
                                                   "0:IndexError",
                                                   "0:ValueError",
@@ -27,7 +28,8 @@ class EmbeddingMap:
                                                   "0:NotImplementedError",
                                                   "0:OverflowError",
                                                   "0:IOError",
-                                                  "0:UnwrapNoneError"])
+                                                  "0:UnwrapNoneError",
+                                                  "0:LinAlgError"])
 
     def preallocate_runtime_exception_names(self, names):
         for i, name in enumerate(names):

@@ -734,9 +734,11 @@ class CommKernel:
                 self._write_int32(embedding_map.store_str(function))
             else:
                 exn_type = type(exn)
-                if exn_type in (ZeroDivisionError, ValueError, IndexError, RuntimeError) or \
-                        hasattr(exn, "artiq_builtin"):
+                if exn_type in (ZeroDivisionError, IndexError, ValueError, RuntimeError, AssertionError, KeyError, \
+                        NotImplementedError, OverflowError, IOError, exceptions.LinAlgError, exceptions.UnwrapNoneError):
                     name = "0:{}".format(exn_type.__name__)
+                elif hasattr(exn, "artiq_builtin"):
+                    name = "0:{}.{}".format(exn_type.__module__, exn_type.__name__)
                 else:
                     exn_id = embedding_map.store_object(exn_type)
                     name = "{}:{}.{}".format(exn_id,
