@@ -661,6 +661,8 @@ class ARTIQIRGenerator(algorithm.Visitor):
                 self.append(ir.Raise(exn, self.unwind_target))
             else:
                 self.append(ir.Raise(exn))
+            print(f"Raise Block => {exn}")
+            
         else:
             if self.unwind_target is not None:
                 self.append(ir.Resume(self.unwind_target))
@@ -2223,6 +2225,7 @@ class ARTIQIRGenerator(algorithm.Visitor):
                   param2=None, nomsgcheck=False):
         typ = typ.find()
         name = "{}:{}".format(typ.id, typ.name)
+        # Handles Exception part on host device (still need to check for firmware)
         name_id = self.embedding_map.store_str(name)
         attributes = [
             ir.Constant(name_id,        builtins.TInt32()),   # typeinfo

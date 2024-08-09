@@ -184,17 +184,32 @@ def fn_array():
 def fn_Exception():
     return types.TExceptionConstructor(TException("Exception"))
 
+def fn_ZeroDivisionError():
+    return types.TExceptionConstructor(TException("ZeroDivisionError"))
+
 def fn_IndexError():
     return types.TExceptionConstructor(TException("IndexError"))
 
 def fn_ValueError():
     return types.TExceptionConstructor(TException("ValueError"))
 
-def fn_ZeroDivisionError():
-    return types.TExceptionConstructor(TException("ZeroDivisionError"))
-
 def fn_RuntimeError():
     return types.TExceptionConstructor(TException("RuntimeError"))
+
+def fn_AssertionError():
+    return types.TExceptionConstructor(TException("AssertionError"))
+
+def fn_KeyError():
+    return types.TExceptionConstructor(TException("KeyError"))
+
+def fn_NotImplementedError():
+    return types.TExceptionConstructor(TException("NotImplementedError"))
+
+def fn_OverflowError():
+    return types.TExceptionConstructor(TException("OverflowError"))
+
+def fn_IOError():
+    return types.TExceptionConstructor(TException("IOError"))
 
 def fn_range():
     return types.TBuiltinFunction("range")

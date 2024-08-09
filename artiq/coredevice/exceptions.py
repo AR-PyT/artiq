@@ -8,10 +8,14 @@ from artiq.coredevice.runtime import source_loader
 
 
 ZeroDivisionError = builtins.ZeroDivisionError
-ValueError = builtins.ValueError
 IndexError = builtins.IndexError
+ValueError = builtins.ValueError
 RuntimeError = builtins.RuntimeError
 AssertionError = builtins.AssertionError
+KeyError = builtins.KeyError
+NotImplementedError = builtins.NotImplementedError
+OverflowError = builtins.OverflowError
+IOError = builtins.IOError
 
 
 class CoreException:
@@ -122,7 +126,7 @@ class RTIOUnderflow(Exception):
 
     The offending event is discarded and the RTIO core keeps operating.
     """
-    artiq_builtin = True
+    artiq_builtin = True    
 
 
 class RTIOOverflow(Exception):
@@ -157,13 +161,13 @@ class SubkernelError(Exception):
 
 class ClockFailure(Exception):
     """Raised when RTIO PLL has lost lock."""
-
+    artiq_builtin = True
 
 class I2CError(Exception):
     """Raised when a I2C transaction fails."""
-    pass
+    artiq_builtin = True
 
 
 class SPIError(Exception):
     """Raised when a SPI transaction fails."""
-    pass
+    artiq_builtin = True

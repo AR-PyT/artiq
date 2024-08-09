@@ -498,10 +498,82 @@ class AssertTest(ExperimentCase):
             self.assertEqual(str(ctx.exception), msg)
 
         exp.check(True)
+        # IR generated see artiq.compiler.transform.artiq_ir_generator
         check_fail(lambda: exp.check(False), "AssertionError")
         exp.check_msg(True)
         check_fail(lambda: exp.check_msg(False), "foo")
 
+class _ZeroDivision(EnvExperiment):
+    def build(self):
+        self.setattr_device("core")
+
+    @kernel
+    def check(self, rhs):
+        return 1.0 / rhs 
+
+class ZeroDivisionTest(ExperimentCase):
+    def test_zero_division(self):
+        exp = self.create(_ZeroDivision)
+
+        self.assertEqual(exp.check(2.0), 0.5)
+        with self.assertRaises(ZeroDivisionError) as ctx:
+            exp.check(1.0 - 1.0)
+        print(str(ctx.exception))
+
+class _IndexError(EnvExperiment):
+    def build(self):
+        self.setattr_device("core")
+
+    @kernel
+    def check(self, idx):
+        l = [0, 1, 2, 3, 4, 5]
+        return l[idx]
+
+class IndexErrorTest(ExperimentCase):
+    def test_index_error(self):
+        exp = self.create(_IndexError)
+
+        self.assertEqual(exp.check(2), 2)
+        with self.assertRaises(IndexError) as ctx:
+            exp.check(10)
+        print(str(ctx.exception))
+
+from math import log
+
+class _ValueError(EnvExperiment):
+    def build(self):
+        self.setattr_device("core")
+
+    @kernel
+    def check_fail(self):
+        return log(-1)
+
+# Requires Sync
+class ValueErrorTest(ExperimentCase):
+    def test_index_error(self):
+        exp = self.create(_ValueError)
+
+        # self.(exp.check(2), 100)
+        with self.assertRaises(ValueError) as ctx:
+            exp.check_fail()
+        print(str(ctx.exception))
+
+class _OverflowError(EnvExperiment):
+    def build(self):
+        self.setattr_device("core")
+
+    @kernel
+    def check(self, pow):
+        return 2.5625 ** pow
+
+class OverflowErrorTest(ExperimentCase):
+    def test_index_error(self):
+        exp = self.create(_OverflowError)
+
+        self.assertEqual(exp.check(1), 2.5625)
+        # with self.assertRaises(OverflowError) as ctx:
+        exp.check(1000)
+        # print(str(ctx.exception))
 
 class _NumpyBool(EnvExperiment):
     def build(self):

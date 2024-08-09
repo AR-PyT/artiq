@@ -173,4 +173,7 @@ static mut API: &'static [(&'static str, *const ())] = &[
     api!(spi_set_config = ::nrt_bus::spi::set_config),
     api!(spi_write = ::nrt_bus::spi::write),
     api!(spi_read = ::nrt_bus::spi::read),
+
+    /* test exceptions */
+    api!(test_exception = ::eh_artiq::test_exception)
 ];

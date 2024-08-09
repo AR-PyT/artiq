@@ -5,6 +5,7 @@ from ..module import Module, Source
 from ..targets import NativeTarget
 
 def main():
+    print("[+] Executing Main")
     libartiq_support = os.getenv("LIBARTIQ_SUPPORT")
     if libartiq_support is not None:
         llvm.load_library_permanently(libartiq_support)
@@ -19,10 +20,13 @@ def main():
 
     source = "".join(fileinput.input())
     source = source.replace("#ARTIQ#", "")
+    print("[+] Source Read")
     mod = Module(Source.from_string(source.expandtabs(), engine=engine))
+    print("[+] Module Ready")
 
     target = NativeTarget()
     llmod = mod.build_llvm_ir(target)
+    # print(llmod)
     llparsedmod = llvm.parse_assembly(str(llmod))
     llparsedmod.verify()
 

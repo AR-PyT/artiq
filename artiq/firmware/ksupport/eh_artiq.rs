@@ -328,19 +328,25 @@ extern fn stop_fn(_version: c_int,
     }
 }
 
-static EXCEPTION_ID_LOOKUP: [(&str, u32); 12] = [
-    ("RuntimeError", 0),
-    ("RTIOUnderflow", 1),
-    ("RTIOOverflow", 2),
-    ("RTIODestinationUnreachable", 3),
-    ("DMAError", 4),
-    ("I2CError", 5),
-    ("CacheError", 6),
-    ("SPIError", 7),
-    ("ZeroDivisionError", 8),
-    ("IndexError", 9),
-    ("UnwrapNoneError", 10),
-    ("SubkernelError", 11)
+static EXCEPTION_ID_LOOKUP: [(&str, u32); 18] = [
+    ("RTIOUnderflow", 0),
+    ("RTIOOverflow", 1),
+    ("RTIODestinationUnreachable", 2),
+    ("DMAError", 3),
+    ("I2CError", 4),
+    ("CacheError", 5),
+    ("SPIError", 6),
+    ("SubkernelError", 7),
+    ("AssertionError", 8),
+    ("AttributeError", 9),
+    ("IndexError", 10),
+    ("KeyError", 11),
+    ("NotImplementedError", 12),
+    ("RuntimeError", 13),
+    ("TimeoutError", 14),
+    ("TypeError", 15),
+    ("ValueError", 16),
+    ("ZeroDivisionError", 17),
 ];
 
 pub fn get_exception_id(name: &str) -> u32 {
@@ -352,3 +358,24 @@ pub fn get_exception_id(name: &str) -> u32 {
     unimplemented!("unallocated internal exception id")
 }
 
+
+#[no_mangle]
+pub extern "C-unwind" fn test_exception(exn_id: u32) {
+    let mut message = "";
+    for (n, id) in EXCEPTION_ID_LOOKUP.iter() {
+        if *id == exn_id {
+            message = *n;
+        }
+    }
+    
+    let exn = Exception {
+        id:       exn_id,
+        file:     file!().as_c_slice(),
+        line:     line!(),
+        column:   column!(),
+        function: "(Rust function)".as_c_slice(),
+        message:  message.as_c_slice(),
+        param:    [0, 0, 0]
+    };
+    unsafe { raise(&exn) };
+}

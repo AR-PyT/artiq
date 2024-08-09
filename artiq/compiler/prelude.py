@@ -22,10 +22,15 @@ def globals():
 
         # Exception constructors
         "Exception":            builtins.fn_Exception(),
+        "ZeroDivisionError":    builtins.fn_ZeroDivisionError(),
         "IndexError":           builtins.fn_IndexError(),
         "ValueError":           builtins.fn_ValueError(),
-        "ZeroDivisionError":    builtins.fn_ZeroDivisionError(),
         "RuntimeError":         builtins.fn_RuntimeError(),
+        "AssertionError":       builtins.fn_AssertionError(),
+        "KeyError":             builtins.fn_KeyError(),
+        "NotImplementedError":  builtins.fn_NotImplementedError(),
+        "OverflowError":        builtins.fn_OverflowError(),
+        "IOError":              builtins.fn_IOError(),
 
         # Built-in Python functions
         "len":                  builtins.fn_len(),
